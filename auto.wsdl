@@ -1,0 +1,56 @@
+<!--  
+WAT
+2021-05-15
+let you post/retrieve online message by SOAP protocol
+
+Online WSDL 1.1 SOAP generator 0.2
+Julien Blitte
+  -->
+<definitions xmlns:tns="pl.wat.ppr.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="pl.wat.ppr.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="let you post/retrieve online message by SOAP protocol" targetNamespace="pl.wat.ppr.wsdl">
+<!--  definition of datatypes  -->
+<types>
+<schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="pl.wat.ppr.xsd">
+<element name="message">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+</schema>
+</types>
+<!--  response messages  -->
+<message name="returns_message">
+<part name="message" type="xsd:message"/>
+</message>
+<!--  request messages  -->
+<message name="sendMessage">
+<part name="message" type="xsd:message"/>
+</message>
+<!--  server's services  -->
+<portType name="sendMessage">
+<operation name="sendMessage">
+<input message="tns:sendMessage"/>
+<output message="tns:returns_message"/>
+</operation>
+</portType>
+<!--  server encoding  -->
+<binding name="sendMessage_webservices" type="tns:sendMessage">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="sendMessage">
+<soap:operation soapAction="urn:xmethods-delayed-quotes#sendMessage"/>
+<input>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+</binding>
+<!--  access to service provider  -->
+<service name="PC">
+<port name="PC_0" binding="sendMessage_webservices">
+<soap:address location="http://127.0.0.1:1234"/>
+</port>
+</service>
+</definitions>
