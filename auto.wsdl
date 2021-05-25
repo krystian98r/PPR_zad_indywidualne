@@ -50,7 +50,7 @@ Julien Blitte
 <!--  access to service provider  -->
 <service name="PC">
 <port name="PC_0" binding="sendMessage_webservices">
-<soap:address location="http://127.0.0.1:1234"/>
+<soap:address location="http://127.0.0.1:3333"/>
 </port>
 </service>
 </definitions>

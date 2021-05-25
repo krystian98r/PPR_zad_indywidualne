@@ -11,39 +11,43 @@ namespace PPR_zad_indywidualne
 			var binding = new System.ServiceModel.BasicHttpBinding();
             binding.Name = "simpleService_webservices";
             binding.Namespace = "pl.pc.wat.ppr.wsdl";
-            var endpointAddress = new System.ServiceModel.EndpointAddress(new Uri("http://127.0.0.1:1234"));
+            var endpointAddress = new System.ServiceModel.EndpointAddress(new Uri("http://127.0.0.1:3333"));
             var ssr = new ServiceReference.sendMessageClient(binding,endpointAddress);
-            var req = new ServiceReference.sendMessageRequest("msg.ToString()");
-            Console.WriteLine("Przeslano");
-			Console.WriteLine(msg);
+            var req = new ServiceReference.sendMessageRequest(msg);
+            Console.WriteLine("Sent forward");
             var result = ssr.sendMessageAsync(req);
             result.Wait();
 		}
 
         static void Main(string[] args)
-        {
-            byte[] bytes = new Byte[1024];
-			string msg = null;
+        {	
+			Console.WriteLine("*** PROCES 3 ***");
+			byte[] bytes = new Byte[1024];
+			string msg;
 			IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 2222);
 			Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp );
-			Console.WriteLine("*** PROCES 3 ***");
-			listener.Bind(localEndPoint);
-			listener.Listen(10); 
+			try {
+				listener.Bind(localEndPoint);
+				listener.Listen(10); 
 				while (true) {
 					try{
-						Console.WriteLine("Waiting...");
 						Socket handler = listener.Accept();
 						handler.Receive(bytes);
-						//msg = Encoding.Unicode.GetString(bytes);
-                        msg = System.Text.Encoding.Default.GetString(bytes);
-						Console.WriteLine($"Received: {msg}, sending it back.");
-						SoapClient(msg);
-						handler.Shutdown(SocketShutdown.Both);
+						msg = System.Text.Encoding.Default.GetString(bytes);
+						// msg = Encoding.Unicode.GetString(bytes);
+						// Console.WriteLine(msg);
+						byte[] ba = Encoding.Default.GetBytes(msg);
+						string hexString = BitConverter.ToString(bytes);
+						hexString = hexString.Replace("-", "");
 						handler.Close();
+						SoapClient(hexString.TrimEnd('0'));
 					} catch (Exception e) {
 						Console.WriteLine(e.ToString());
-					}
+					} 
 				}
-            }
+			} catch (Exception e) {
+				Console.WriteLine(e.ToString());
+			}
+        }
         }
 }

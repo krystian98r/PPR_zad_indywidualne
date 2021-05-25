@@ -46,13 +46,12 @@ void socketClient(char *str) {
     /* nawiazujemy polaczenie *****************************************/
     if( connect( fd, (struct sockaddr *) &serv_addr, sizeof( serv_addr ) ) < 0 ) 
         printf( "connect() failed ");
-	
-    char buffer[1024];
-    bzero(buffer, sizeof(buffer));
-    strcpy(buffer, str);
 
+    char buf[1024];
+    bzero(buf, sizeof(buf));
+    strcpy(buf, str);
     /* przesylamy string */
-    write(fd, buffer, sizeof(buffer));
+    write(fd, buf, sizeof(buf));
 
     close(fd);
 } 
@@ -75,7 +74,8 @@ static xmlrpc_value * getMess (
     /* Dodajemy argumenty *********************************************/
 
     /* Zwracamy wynik *************************************************/
-    printf("Message: %s\n", str);
+    // printf("Message: %s\n", str);
+    printf("Sent forward\n");
     socketClient(str);
 
     return xmlrpc_build_value(envP, "s", str);

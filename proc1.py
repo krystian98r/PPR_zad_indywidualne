@@ -5,4 +5,4 @@ print("*** PROCES 1 ***")
 
 while 1:
     msg = input('Enter message: \n> ')
-    print(s.getMess(msg))
+    s.getMess(msg)

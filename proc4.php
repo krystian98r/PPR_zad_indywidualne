@@ -7,11 +7,11 @@
 		return $hex;
 	}
 	#===================================================================
-	function sendMessage( $mess) {
+	function sendMessage($mess) {
 		$stderr = fopen('php://stderr', 'w');
 
 		$hex = strToHex($mess);
-		fwrite( $stderr, "Message: $hex\n" );
+		// fwrite( $stderr, "Message: $hex\n" );
 		fwrite( $stderr, "Message: $mess\n" );
 		return $hex;
 	}
