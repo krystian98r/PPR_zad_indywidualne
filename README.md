@@ -1,6 +1,6 @@
 # PPR_zad_indywidualne
  Zadanie indywidualne z przedmiotu Podstawy Przetwarzania Rozproszonego
-Proces1: python
+Proces1: python </br>
 Proces2: c
 Proces3: c#
 Proces4: php
