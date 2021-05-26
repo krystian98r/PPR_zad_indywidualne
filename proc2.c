@@ -76,7 +76,7 @@ static xmlrpc_value * getMess (
     /* Zwracamy wynik *************************************************/
     // printf("Message: %s\n", str);
     printf("Sent forward\n");
-    socketClient(str);
+    socketClient(strcat(str, "_Ruczynski"));
 
     return xmlrpc_build_value(envP, "s", str);
 }
